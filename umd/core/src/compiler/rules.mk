@@ -30,9 +30,9 @@
 
 LOCAL_DIR := $(GET_LOCAL_DIR)
 
-MODULE_CC := gcc
-MODULE_CPP := g++
-MODULE_LD := ld
+MODULE_CC := $(TOOLCHAIN_PREFIX)gcc
+MODULE_CPP := $(TOOLCHAIN_PREFIX)g++
+MODULE_LD := $(TOOLCHAIN_PREFIX)ld
 
 NVDLA_SRC_FILES := \
     caffe/CaffeParser.cpp \

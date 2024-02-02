@@ -31,6 +31,8 @@ COMPILER_SUBDIRS = core/src/compiler \
 RUNTIME_SUBDIRS = core/src/runtime \
 	apps/runtime
 
+all: clean compiler runtime
+
 compiler:
 	for dir in $(COMPILER_SUBDIRS); do \
 		$(MAKE) -C $$dir; \

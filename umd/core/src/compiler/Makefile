@@ -26,6 +26,8 @@
 
 ROOT := $(TOP)
 
+TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
+
 MODULE := libnvdla_compiler
 
 include $(ROOT)/make/macros.mk
@@ -36,8 +38,8 @@ LIB := $(BUILDDIR)/$(MODULE).so
 
 INCLUDES := -I$(ROOT)/external/protobuf-2.6/src
 MODULE_COMPILEFLAGS := -g -fPIC -finline -W -Wall -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Werror-implicit-function-declaration
-MODULE_CFLAGS := --std=c99 
-MODULE_CPPFLAGS := --std=c++11 -fexceptions -fno-rtti
+MODULE_CFLAGS := --std=c99
+MODULE_CPPFLAGS := --std=c++11 -fexceptions -frtti
 
 all:: $(LIB)
 
@@ -46,4 +48,4 @@ include rules.mk
 # the logic to compile and link stuff is in here
 $(LIB): $(ALLMODULE_OBJS)
 	@echo building $(MODULE)  $@
-	g++ -shared libprotobuf.a $(ALLMODULE_OBJS) -o $@
+	$(TOOLCHAIN_PREFIX)g++ -shared libprotobuf.a $(ALLMODULE_OBJS) -o $@

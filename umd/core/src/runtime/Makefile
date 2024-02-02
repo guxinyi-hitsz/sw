@@ -26,7 +26,7 @@
 
 ROOT := $(TOP)
 
-TOOLCHAIN_PREFIX ?=
+TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
 
 ifeq ($(TOOLCHAIN_PREFIX),)
 $(error Toolchain prefix missing)
@@ -44,7 +44,7 @@ INCLUDES :=
 MODULE_OPTFLAGS ?= -Os
 MODULE_COMPILEFLAGS := -g -fPIC -finline -W -Wall -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Werror-implicit-function-declaration
 MODULE_CFLAGS := --std=c99
-MODULE_CPPFLAGS := --std=c++11 -fexceptions -fno-rtti
+MODULE_CPPFLAGS := --std=c++11 -fexceptions -frtti
 
 all:: $(LIB)
 
