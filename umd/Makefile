@@ -24,6 +24,10 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# Before make:
+# export TOP=${the path to umd root directory}
+# export UMD_VERSION=${nvdla,tengine}
+# Then run make:
 
 COMPILER_SUBDIRS = core/src/compiler \
 	apps/compiler
@@ -31,7 +35,12 @@ COMPILER_SUBDIRS = core/src/compiler \
 RUNTIME_SUBDIRS = core/src/runtime \
 	apps/runtime
 
-all: clean compiler runtime
+UMD_VERSION ?= nvdla
+
+all: clean desc compiler runtime
+
+desc:
+	@echo "umd version specified -- $(UMD_VERSION)"
 
 compiler:
 	for dir in $(COMPILER_SUBDIRS); do \

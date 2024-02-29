@@ -26,7 +26,7 @@
 
 ROOT := $(TOP)
 
-TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
+UMD_VERSION ?= nvdla
 
 MODULE := libnvdla_compiler
 
@@ -39,7 +39,17 @@ LIB := $(BUILDDIR)/$(MODULE).so
 INCLUDES := -I$(ROOT)/external/protobuf-2.6/src
 MODULE_COMPILEFLAGS := -g -fPIC -finline -W -Wall -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Werror-implicit-function-declaration
 MODULE_CFLAGS := --std=c99
-MODULE_CPPFLAGS := --std=c++11 -fexceptions -frtti
+MODULE_CPPFLAGS := --std=c++11 -fexceptions
+
+ifeq ($(UMD_VERSION), nvdla)
+	MODULE_CPPFLAGS += -fno-rtti
+	TOOLCHAIN_PREFIX ?=
+else ifeq ($(UMD_VERSION), tengine)
+	MODULE_CPPFLAGS += -frtti
+	TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
+else
+	$(error please choose one umd version, 'nvdla' or 'tengine'.)
+endif
 
 all:: $(LIB)
 

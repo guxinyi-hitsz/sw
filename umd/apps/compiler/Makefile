@@ -26,7 +26,7 @@
 
 ROOT := $(TOP)
 
-TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
+UMD_VERSION ?= nvdla
 
 MODULE := nvdla_compiler
 
@@ -39,7 +39,17 @@ TEST_BIN := $(BUILDDIR)/$(MODULE)
 INCLUDES :=
 MODULE_COMPILEFLAGS := -g -W -Wall -Wno-multichar -Wno-unused-parameter -Wno-unused-function -Werror-implicit-function-declaration
 MODULE_CFLAGS := --std=c99
-MODULE_CPPFLAGS := --std=c++11 -fexceptions -frtti
+MODULE_CPPFLAGS := --std=c++11 -fexceptions
+
+ifeq ($(UMD_VERSION), nvdla)
+	MODULE_CPPFLAGS += -fno-rtti
+	TOOLCHAIN_PREFIX ?=
+else ifeq ($(UMD_VERSION), tengine)
+	MODULE_CPPFLAGS += -frtti
+	TOOLCHAIN_PREFIX ?= aarch64-linux-gnu-
+else
+	$(error please choose one umd version, 'nvdla' or 'tengine'.)
+endif
 
 all:: $(TEST_BIN)
 
