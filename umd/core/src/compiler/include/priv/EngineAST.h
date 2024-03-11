@@ -1370,10 +1370,10 @@ public:
     void setTaskId(NvS16 id) { m_taskId = id; }
     NvS16 taskId() const { return m_taskId; }
 
-    inline bool debugWinograd() const { return false; }
-    inline bool debugSplits() const { return false; }
-    inline bool debugFusion() const { return false; }
-    inline bool debugResolveDependencies() const { return false; }
+    inline bool debugWinograd() const { return true; }
+    inline bool debugSplits() const { return true; }
+    inline bool debugFusion() const { return true; }
+    inline bool debugResolveDependencies() const { return true; }
 
     virtual NvDlaError emitOp(Graph *, DLAInterface *, NvU32 op_slot, NvU32 batch_id,
                            DLACommonOpDescAccessor,
@@ -1502,7 +1502,7 @@ public:
     NodeSequence topNodes();
     NodeSequence bottomNodes();
 
-    inline bool debugNestedGraph() { return false; }
+    inline bool debugNestedGraph() { return true; }
 
 protected:
     ScoredDependencyOrdering *m_ng_scored_ordering;
@@ -1724,7 +1724,7 @@ public:
     }
     virtual ~ConcatenationNode() { }
 
-    inline bool debugConcat() { return false; }
+    inline bool debugConcat() { return true; }
     virtual void captureCanonicalParams();
     OpParams& params(NvU16 batchId = 0) { return m_mb_op_params->batch(batchId); }
 
@@ -1791,7 +1791,7 @@ public:
     }
     virtual ~SplitNode() { }
 
-    inline bool debugSplit() { return false; }
+    inline bool debugSplit() { return true; }
     virtual void captureCanonicalParams();
     OpParams& params(NvU16 batchId = 0) { return m_mb_op_params->batch(batchId); }
 
@@ -3232,7 +3232,7 @@ public:
 
     NvDlaError determineContractOpParams();
 
-    inline bool debugRubik() const { return false; }
+    inline bool debugRubik() const { return true; }
 
     OpParams& params(NvU16 batchId = 0) { return m_mb_op_params->batch(batchId); }
     virtual void captureCanonicalParams();
@@ -3343,7 +3343,7 @@ public:
     }
     virtual ~Edge() { }
 
-    static inline bool debugBinding() { return false; }
+    static inline bool debugBinding() { return true; }
 
     const std::string id() const     { return m_id; }
     void setId(const std::string id) { m_id = id; }
@@ -3658,7 +3658,7 @@ protected:
     engine_ast::Graph *m_graph;
     NvS16 m_debugBindId;
 
-    inline bool debugCopyOutDebug() { return false; }
+    inline bool debugCopyOutDebug() { return true; }
 
 };
 

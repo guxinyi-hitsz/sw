@@ -132,8 +132,8 @@ public:
     void insertContent(surface::TensorSurfaceDesc *tsd) { m_contents.insert(tsd); }
     std::set<surface::TensorSurfaceDesc *> &contents() { return m_contents; }
 
-    static inline bool debug() { return false; }
-    static inline bool debugBinding() { return false; }
+    static inline bool debug() { return true; }
+    static inline bool debugBinding() { return true; }
 
 protected:
 
@@ -203,7 +203,7 @@ public:
 
     ~TensorBufferDesc();
 
-    static inline bool debugBinding() { return false; }
+    static inline bool debugBinding() { return true; }
 
     void setId(const std::string id)  { m_id = id; }
     const std::string id() const      { return m_id; }

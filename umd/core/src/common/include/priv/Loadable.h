@@ -141,7 +141,7 @@ public: // internally facing
         Symbol() { }
     };
 
-    inline bool debugSymbolContent() { return false; }
+    inline bool debugSymbolContent() { return true; }
 
 protected:
     friend class Runtime;

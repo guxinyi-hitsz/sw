@@ -418,7 +418,7 @@ public:
         m_mb_tsd_state = other.m_mb_tsd_state;  // Is this correct?
     }
 
-    static inline bool debugBinding() { return false; }
+    static inline bool debugBinding() { return true; }
 
     void setName(const std::string name)  { m_name = name; }
     const std::string name() const        { return m_name; }
