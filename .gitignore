@@ -1,3 +1,4 @@
+umd/apps/compiler/libprotobuf.a
 umd/out/
 umd/external/
 kmd/.tmp_versions/
