@@ -229,7 +229,13 @@ NvU16 engine_ast::PDPNode::calculateMaxWidth
     NvU16 kernelPerGroup      = pdpPrecision.v() == surface::SurfacePrecisionEnum::NVDLA_PRECISION_INT8 ? atom_k_size : atom_k_size / 2;
     NvU16 bitsPerElement      = pdpPrecision.v() == surface::SurfacePrecisionEnum::NVDLA_PRECISION_INT8 ? 14 : 28;
 
+    if (logicalOverlapLines > 8){
+        gLogError << "("<<name()<<") Error: logicalOverlapLines="<<logicalOverlapLines<<" is not supported by RTL, set to 8."<<endl;
+        logicalOverlapLines = 8;
+    }
     pdpMaxFlyingWidth = (PDP_BUF_SIZE * 8) / (rtlOverlapLines[logicalOverlapLines] * kernelPerGroup * bitsPerElement);
+
+    gLogInfo << "("<<name()<<") Info: logicalOverlapLines="<<logicalOverlapLines<<",rtlOverlapLines="<<rtlOverlapLines[logicalOverlapLines]<<",poolingKernelHeight="<<poolingKernelHeight<<",poolingStrideY="<<poolingStrideY<<",kernelPerGroup="<<kernelPerGroup<<",bitsPerElement="<<bitsPerElement<<endl;
 
     return pdpMaxFlyingWidth;
 }
