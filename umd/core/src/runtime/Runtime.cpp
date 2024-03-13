@@ -663,7 +663,14 @@ NvDlaError Runtime::submitInternal()
 
                     fillTaskAddressList(task, &dla_task);
 
+                    struct timespec tik, tok;
+                    clock_gettime(CLOCK_MONOTONIC, &tik);
+                    NvDlaDebugPrintf("KMD task id %d submitting...\n", task->id());
+
                     PROPAGATE_ERROR_FAIL( NvDlaSubmit(NULL, dev, &dla_task, 1) );
+
+                    clock_gettime(CLOCK_MONOTONIC, &tok);
+                    NvDlaDebugPrintf("KMD task id %d is executed for %.3f ms\n", task->id(), NvDlaGetElapseTimeMS(&tik,&tok));
                 }
                 break;
                 case ILoadable::Interface_EMU1:

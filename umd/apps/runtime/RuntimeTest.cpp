@@ -103,7 +103,7 @@ static NvDlaError copyImageToInputTensor
 
     PROPAGATE_ERROR(createImageCopy(appArgs, R8Image, tensorDesc, tensorImage));
 
-    //tensorImage->printBuffer(true);  /* Print the input Buffer */ 
+    //tensorImage->printBuffer(true);  /* Print the input Buffer */
 
     PROPAGATE_ERROR(DIMG2DlaBuffer(tensorImage, pImgBuffer));
 
@@ -391,13 +391,14 @@ NvDlaError runTest(const TestAppArgs* appArgs, TestInfo* i)
     PROPAGATE_ERROR_FAIL(setupInputBuffer(appArgs, i, &pInputBuffer));
 
     PROPAGATE_ERROR_FAIL(setupOutputBuffer(appArgs, i, &pOutputBuffer));
-    NvDlaDebugPrintf("submitting tasks...\n");
+    NvDlaDebugPrintf("runtime submitting tasks...\n");
     clock_gettime(CLOCK_MONOTONIC, &before);
     if (!runtime->submit())
         ORIGINATE_ERROR(NvDlaError_BadParameter, "runtime->submit() failed");
 
     clock_gettime(CLOCK_MONOTONIC, &after);
-    NvDlaDebugPrintf("execution time = %f s\n", get_elapsed_time(&before,&after));
+    //NvDlaDebugPrintf("runtime execution time = %f s\n", get_elapsed_time(&before,&after));
+    NvDlaDebugPrintf("runtime execution time = %.3f ms\n", NvDlaGetElapseTimeMS(&before,&after));
 
     PROPAGATE_ERROR_FAIL(DlaBuffer2DIMG(&pOutputBuffer, i->outputImage));
 

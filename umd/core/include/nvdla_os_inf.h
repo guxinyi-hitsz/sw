@@ -108,6 +108,8 @@ void NvDlaDebugPrintf( const char *format, ... );
 NvU32 NvDlaGetTimeMS(void);
 void NvDlaSleepMS(NvU32 msec);
 
+NvF64 NvDlaGetElapseTimeMS(struct timespec *tik, struct timespec *tok);
+
 /*
  * Thread related functions
  */

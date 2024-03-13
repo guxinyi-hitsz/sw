@@ -147,6 +147,13 @@ void NvDlaSleepMS(NvU32 msec)
     return;
 }
 
+NvF64 NvDlaGetElapseTimeMS(struct timespec *tik, struct timespec *tok)
+{
+  NvF64 deltat_s  = (tok->tv_sec - tik->tv_sec) * 1000; // seconds to microseconds
+  NvF64 deltat_ns = (tok->tv_nsec - tik->tv_nsec) / 1000 / 1000; // 10^-9 nanoseconds to 10^-3 microseconds
+  return deltat_s + deltat_ns;
+}
+
 NvU32 NvDlaGetTimeMS(void)
 {
     struct timespec ts;
