@@ -654,7 +654,9 @@ NvDlaError Compiler::compileInternal(Profile *profile, TargetConfig *target_conf
         if ( dumpPassGraph )
         {
             std::stringstream ss; ss << "eng_post_pass_" << pass;
-            //            g.back()->dumpGraphJson(ss.str() + ".json", ss.str());
+            dump_eng.setGraphId(ss.str());
+            dump_eng.setFilename(ss.str() + ".json");
+            PROPAGATE_ERROR_FAIL( dump_eng.visitElems(g.back()->scoredOrdering()));
         }
 
         done = !g.back()->dirty();
