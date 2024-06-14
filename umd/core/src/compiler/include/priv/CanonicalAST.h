@@ -509,6 +509,8 @@ protected:
 
 }; // nvdla::
 
+class ODLAEngine;
+
 namespace nvdla
 {
 
@@ -912,6 +914,8 @@ namespace canonical_ast
 
         template <typename T> static T nodeCast(Node*);
 
+    protected:
+        friend ODLAEngine;
     protected:
         static std::map<Node*, ConvolutionNode*>     s_conv_priv;
         static std::map<Node*, FullyConnectedNode*>  s_fc_priv;

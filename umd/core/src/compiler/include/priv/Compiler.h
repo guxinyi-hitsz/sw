@@ -44,6 +44,7 @@
 #include "priv/CanonicalAST.h"
 #include "priv/EngineAST.h"
 
+class ODLAEngine;
 
 namespace nvdla
 {
@@ -107,6 +108,7 @@ protected:
 
     friend class Wisdom;
     friend class CompilerFactory;
+    friend ODLAEngine;
 
     Wisdom *m_wisdom;
 
