@@ -27,7 +27,7 @@
  */
 
 #include <iostream>
-
+#include <iomanip>
 #include "priv/EngineAST.h"
 #include "priv/LowPrecision.h"
 #include "priv/Profile.h"
@@ -35,6 +35,7 @@
 #include "priv/Compiler.h"
 #include "priv/WeightTranslationUnit.h"
 #include "ErrorMacros.h"
+
 
 using std::endl;
 
@@ -681,7 +682,8 @@ NvDlaError engine_ast::SDPBiasOpNode::scaleBiasToInt16
         {
             if (fusedConv)
             {
-                gLogInfo << "rawBias/Si*Sw "
+                gLogInfo << std::setiosflags(std::ios::scientific) << std::setprecision(20)
+                         << __FUNCTION__ << " | " << "rawBias/Si*Sw "
                          << reinterpret_cast<NvF32*>(const_cast<void*>(origBiasBlob.values))[bb] << " / "
                          << " ( " << perTensorInTensorScl << " * " << filterScales[bb] << " ) = "
                          << (reinterpret_cast<NvF32*>(const_cast<void*>(origBiasBlob.values))[bb]/(perTensorInTensorScl * filterScales[bb]))
@@ -689,7 +691,8 @@ NvDlaError engine_ast::SDPBiasOpNode::scaleBiasToInt16
             }
             else
             {
-                gLogInfo << "rawBias/Si "
+                gLogInfo << std::setiosflags(std::ios::scientific) << std::setprecision(20)
+                         << __FUNCTION__ << " | " << "rawBias/Si "
                          << reinterpret_cast<NvF32*>(const_cast<void*>(origBiasBlob.values))[bb] << " / "
                          << perTensorInTensorScl << " = "
                          << (reinterpret_cast<NvF32*>(const_cast<void*>(origBiasBlob.values))[bb]/perTensorInTensorScl)
@@ -1016,13 +1019,13 @@ NvDlaError engine_ast::SDPBiasOpNode::performPerChannelRescaling
             {
                 if (fusedConv)
                 {
-                     gLogInfo << name() << " Si * Sw[k] / So = " << perTensorInTensorScl << " * " << filterScales[cc] << " / " << perTensorOutTensorScl
-                         << " = " << scalesAndShifts[cc].first << "* 2^-" << (int)maxRescaleFactorScaleAndShift.second << endl;
+                     gLogInfo << std::setiosflags(std::ios::scientific) << std::setprecision(20) << __FUNCTION__ << " | " << name() << " Si * Sw[k] / So = " << perTensorInTensorScl << " * " << filterScales[cc] << " / " << perTensorOutTensorScl
+                         << " = " << outputRescales.at(cc) << " = "  << scalesAndShifts[cc].first << "* 2^-" << (int)maxRescaleFactorScaleAndShift.second << endl;
                 }
                 else
                 {
-                    gLogInfo << name() << " Si / So = " << perTensorInTensorScl << " / " << perTensorOutTensorScl
-                         << " = " << scalesAndShifts[cc].first << "* 2^-" << (int)maxRescaleFactorScaleAndShift.second << endl;
+                    gLogInfo << std::setiosflags(std::ios::scientific) << std::setprecision(20) << __FUNCTION__ << " | " << name() << " Si / So = " << perTensorInTensorScl << " / " << perTensorOutTensorScl
+                         << " = " << std::setiosflags(std::ios::scientific) << std::setprecision(20) << outputRescales.at(cc) << " = "  << scalesAndShifts[cc].first << "* 2^-" << (int)maxRescaleFactorScaleAndShift.second << endl;
                 }
             }
         }
